@@ -1,0 +1,6 @@
+authors = ["Petr <pkrysl@ucsd.edu>"]
+name = "FinEtoolsTutorials"
+uuid = "c3a41280-bc77-11e8-3512-81782f32ddb7"
+version = "0.1.0"
+
+[deps]
