@@ -82,10 +82,10 @@ Then from these finite elements we choose the ones that are inside the box that 
 Toplist  = selectelem(fens, boundaryfes, box= [width, width, -Inf, Inf ], inflate=  tolerance);
 ```
 
-To apply the traction we create a finite element model machine (FEMM). For the evaluation of the traction it is sufficient to create a the base FEMM.  It consists of the geometry data `IntegData` (connectivity,  integration rule, evaluation  of the basis functions  and basis function gradients with respect to the parametric coordinates), which in turn is composed of the list of the finite elements and  an appropriate quadrature rule (Gauss rule here).
+To apply the traction we create a finite element model machine (FEMM). For the evaluation of the traction it is sufficient to create a the base FEMM.  It consists of the geometry data `IntegDomain` (connectivity,  integration rule, evaluation  of the basis functions  and basis function gradients with respect to the parametric coordinates), which in turn is composed of the list of the finite elements and  an appropriate quadrature rule (Gauss rule here).
 
 ```julia
-el1femm = FEMMBase(IntegData(subset(boundaryfes, Toplist), GaussRule(1, 3), thickness));
+el1femm = FEMMBase(IntegDomain(subset(boundaryfes, Toplist), GaussRule(1, 3), thickness));
 ```
 
 The traction boundary condition is specified with a constant traction vector and the FEMM that will be used to evaluate  the load vector.
@@ -101,7 +101,7 @@ We make the dictionary for the region (the interior of the domain).  The FEMM an
 ```julia
 MR = DeforModelRed2DStress
 material = MatDeforElastIso(MR,  0.0, E, nu, 0.0)
-region1 = FDataDict("femm"=>FEMMDeforLinear(MR, IntegData(fes, TriRule(3), thickness), material));
+region1 = FDataDict("femm"=>FEMMDeforLinear(MR, IntegDomain(fes, TriRule(3), thickness), material));
 ```
 
 The model data is a dictionary.   In the present example it consists of the node set, the array of dictionaries for the regions, and arrays of dictionaries for each essential and natural boundary condition.

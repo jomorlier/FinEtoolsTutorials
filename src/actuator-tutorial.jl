@@ -92,8 +92,8 @@ mater = MatHeatDiff(kappa);
 cl =  selectelem(fens, fes, box=[x0,x2,y0,y2,z0,z1],inflate = t/100);
 
 # The two  FEMMs are then generated (please refer to the documentation for a detailed explanation of what the Finite Element Method Machine, FEMM, is for). One for the "hot" region (with the current running through) and the remaining "cold"  region (only affected by the heat conduction).
-hotfemm  =  FEMMHeatDiff(IntegData(subset(fes,cl), GaussRule(3, 3)), mater)
-coldfemm  = FEMMHeatDiff(IntegData(subset(fes,setdiff(collect(1:count(fes)), cl)),  GaussRule(3, 3)), mater);
+hotfemm  =  FEMMHeatDiff(IntegDomain(subset(fes,cl), GaussRule(3, 3)), mater)
+coldfemm  = FEMMHeatDiff(IntegDomain(subset(fes,setdiff(collect(1:count(fes)), cl)),  GaussRule(3, 3)), mater);
 
 # We create the geometry  and the temperature  nodal fields. The nodal fields represent the locations of the nodes and the temperature at the nodes.
 geom = NodalField(fens.xyz)

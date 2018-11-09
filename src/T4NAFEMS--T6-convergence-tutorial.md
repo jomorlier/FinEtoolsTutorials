@@ -93,14 +93,14 @@ elements L3. The order-four Gauss quadrature is sufficiently accurate.
 ```julia
         l2 = selectelem(fens, bfes; box=[Width Width  0.0 Height], inflate =tolerance)
         l3 = selectelem(fens, bfes; box=[0.0 Width Height Height], inflate =tolerance)
-        cfemm = FEMMHeatDiffSurf(IntegData(subset(bfes,vcat(l2,l3)), GaussRule(1, 4), Thickness), h)
+        cfemm = FEMMHeatDiffSurf(IntegDomain(subset(bfes,vcat(l2,l3)), GaussRule(1, 4), Thickness), h)
         convection1 = FDataDict("femm"=>cfemm, "ambient_temperature"=>0.);
 ```
 
 FEMM  for the interior of the domain
 
 ```julia
-        femm = FEMMHeatDiff(IntegData(fes, TriRule(3), Thickness), material)
+        femm = FEMMHeatDiff(IntegDomain(fes, TriRule(3), Thickness), material)
         region1 = FDataDict("femm"=>femm)
 ```
 

@@ -30,9 +30,9 @@ MR = DeforModelRed3D
 material=MatDeforElastIso(MR, rho, E, nu, 0.0);
 
 # Note that we compute the stiffness  and the mass matrix using different FEMMs. The difference  is only the quadrature rule chosen: in order to make the mass matrix  non-singular, the accurate  Gauss rule  needs to be used, whereas for the stiffness matrix we want to avoid the excessive stiffness  and therefore  the reduced Gauss rule is used.
-femm = FEMMDeforLinear(MR, IntegData(fes, GaussRule(3,2)), material);
+femm = FEMMDeforLinear(MR, IntegDomain(fes, GaussRule(3,2)), material);
 K =stiffness(femm, geom, u)
-femm = FEMMDeforLinear(MR, IntegData(fes, GaussRule(3,3)), material)
+femm = FEMMDeforLinear(MR, IntegDomain(fes, GaussRule(3,3)), material)
 M =mass(femm, geom, u);
 
 # The free vibration problem  can now be solved.   In order for the eigenvalue solver  to work well, we apply mass-shifting (otherwise the first matrix given to the solver would be singular). We specify the number of eigenvalues to solve for, and we  guess the frequency  with which to shift as 0.01 Hz.

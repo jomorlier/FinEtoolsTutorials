@@ -94,15 +94,15 @@ Now we are ready to create three material regions:  one for the bottom skin, one
 ```julia
 rl1 = selectelem(fens, fes, label=1)
 skinbot = FDataDict("femm"=>FEMMDeforLinear(MR,
-    IntegData(subset(fes, rl1), GaussRule(3, 3)), skinmaterial))
+    IntegDomain(subset(fes, rl1), GaussRule(3, 3)), skinmaterial))
 
 rl3 = selectelem(fens, fes, label=3)
 skintop = FDataDict("femm"=>FEMMDeforLinear(MR,
-    IntegData(subset(fes, rl3), GaussRule(3, 3)), skinmaterial))
+    IntegDomain(subset(fes, rl3), GaussRule(3, 3)), skinmaterial))
 
 rl2 = selectelem(fens, fes, label=2)
 core = FDataDict("femm"=>FEMMDeforLinear(MR,
-    IntegData(subset(fes, rl2), GaussRule(3, 3)), corematerial));
+    IntegDomain(subset(fes, rl2), GaussRule(3, 3)), corematerial));
 ```
 
 Note that since we did not specify the material coordinate system,  the default is assumed  (which is identical to the global Cartesian coordinate system).
@@ -136,7 +136,7 @@ The traction on the top surface of the top skin is applied to the subset  of the
 bfes = meshboundary(fes)
 ttopl = selectelem(fens, bfes; facing=true, direction = [0.0 0.0 1.0])
 Trac = FDataDict("traction_vector"=>[0.0; 0.0; -tmag],
-    "femm"=>FEMMBase(IntegData(subset(bfes, ttopl), GaussRule(2, 3))));
+    "femm"=>FEMMBase(IntegDomain(subset(bfes, ttopl), GaussRule(2, 3))));
 ```
 
 The model data  is composed of the  finite element nodes, an array  of the regions, an array of the essential boundary condition definitions, and  an array of  the traction (natural) boundary condition definitions.
